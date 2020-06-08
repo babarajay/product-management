@@ -1,0 +1,40 @@
+<h1>Products</h1>
+
+<%= form_tag(products_path, method: :get) do %>
+  <%= select_tag "category_id", options_from_collection_for_select(Category.all, 'id', 'name', params[:category_id]), prompt: "Select Category" %>
+  <%= submit_tag 'Search' %>
+<% end %>
+
+<table>
+  <tr>
+    <td>Name</td>
+    <td>Price</td>
+    <td>Category</td>
+    <td>Description</td>
+    <td>Created By</td>
+  </tr>
+  <% @products.each do |product| %>
+    <tr>
+      <td><%= product.name %></td>
+      <td><%= product.price %></td>
+      <td><%= product.category.name %></td>
+      <td><%= product.description %></td>
+      <td><%= product.user.full_name %></td>
+      <td><%= link_to 'Show', product_path(product.id) %></td>
+      <% if product.is_owner?(current_user.id) %>
+        <td><%= link_to 'Edit', edit_product_path(product.id) %></td>
+        <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+
+<br/>
+
+<%= link_to 'New Product', new_product_path %>
+
+<h4>Import Data from CSV</h4>
+<%= form_tag import_products_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag 'import' %>
+<% end %>

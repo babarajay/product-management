@@ -1,0 +1,6 @@
+<p>
+  <%= comment.comment %> <strong>By: <%= comment.user.full_name %></strong>
+  <% if comment.is_owner?(current_user.id) %>
+    <%= link_to 'Delete Comment', product_comment_path(product_id: @product.id,id: comment), method: :delete, data: { confirm: 'Are you sure?' } %>
+  <% end %>
+</p>

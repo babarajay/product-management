@@ -1,0 +1,10 @@
+<%= simple_form_for([@product, @product.comments.build]) do |form| %>
+  <div class="field">
+    <%= form.label :comment %>
+    <%= form.text_field :comment %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Submit' %>
+  </div>
+<% end %>
